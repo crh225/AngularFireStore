@@ -1,7 +1,7 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
   <h1>
-    Firebase: writing data to database!
+    Firebase: updating data in a database!
   </h1>
   <img width="300" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
 
@@ -9,20 +9,8 @@
 
 <div style="text-align:center">
 
-  <br> Name:
-  <input #shirtName>
-  <br> Price:
-  <input #price>
-  <br>
-
-  <button (click)="addTshirt(shirtName.value, price.value)">Add some shirts</button>
-  <br>
-  <div style="text-align:center;display:unset;">
-    List of Shirts:
-    <ul>
-      <li *ngFor="let shirt of shirts | async">
-        {{ shirt.name }} is ${{ shirt.price }}
-      </li>
-    </ul>
-  </div>
+  Update this new item:
+    {{ (item | async)?.name }}<br>
+    <input #updateName><br>
+    <button (click)="update(updateName.value)">Change User Name</button>
 </div>

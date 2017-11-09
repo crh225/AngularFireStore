@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Observable } from 'rxjs/Observable';
 import * as firebase from 'firebase/app';
 
-export interface Shirt { name: string; price: number; }
-export interface ShirtId extends Shirt { id: string; }
+export interface Item { 
+  name: string; 
+}
 
 @Component({
   selector: 'app-root',
@@ -15,18 +16,19 @@ export interface ShirtId extends Shirt { id: string; }
 })
 export class AppComponent {
   _db:AngularFirestore;
-  shirts:  Observable<any[]>;
+  item: Observable<Item>;
+  private itemDoc: AngularFirestoreDocument<Item>;
 
   constructor(public afAuth: AngularFireAuth, db: AngularFirestore) {
     this.afAuth.auth.signInAnonymously();
-    this.shirts = db.collection('tshirts').valueChanges();
     this._db = db;  
+
+    this.itemDoc = this._db.doc<Item>('items/1');
+    this.item = this.itemDoc.valueChanges();
   }
 
-  addTshirt(sName: string, dPrice: number){
-    let shirtsCollection = this._db.collection<Shirt>('tshirts');
-    shirtsCollection.add({ name: sName, price: dPrice });
+  update(sName: string) {
+    let tmp: Item = { name: sName };
+    this.itemDoc.update(tmp);
   }
-
-
 }
