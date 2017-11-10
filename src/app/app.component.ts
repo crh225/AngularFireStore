@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
-import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
-import { AngularFireDatabase } from 'angularfire2/database';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { Component } from '@angular/core';;
 import { Observable } from 'rxjs/Observable';
-import * as firebase from 'firebase/app';
+import { NgModel, NgForm } from '@angular/forms';
 
-export interface Item { 
+export interface Person { 
   name: string; 
+  age: number;
+  street: string,
+  car: string;
 }
 
 @Component({
@@ -15,20 +15,22 @@ export interface Item {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  _db:AngularFirestore;
-  item: Observable<Item>;
-  private itemDoc: AngularFirestoreDocument<Item>;
+   item: Person;
 
-  constructor(public afAuth: AngularFireAuth, db: AngularFirestore) {
-    this.afAuth.auth.signInAnonymously();
-    this._db = db;  
-
-    this.itemDoc = this._db.doc<Item>('items/1');
-    this.item = this.itemDoc.valueChanges();
+  constructor() {
+    this.item = { name : '', age : 0, street : '', car : '' }
   }
 
-  update(sName: string) {
-    let tmp: Item = { name: sName };
-    this.itemDoc.update(tmp);
+  onSubmit(f: NgForm) {
+    //note you can see the entire object
+    console.log(f.value);
+    this.incrementAge(f.value);
   }
+
+  incrementAge( { age, car } ){
+    console.log(age + '' + car);
+    this.item.age = Number(age) + 1;
+    this.item.car = "red";
+  }
+
 }
